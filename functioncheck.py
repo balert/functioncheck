@@ -6,6 +6,7 @@ import os.path, time
 
 ### Config
 DISK_USAGE_THRESHOLD = 75
+MEM_USED_THRESHOLD = .75
 BACKUP_HOURS_THRESHOLD = 24
 
 ### TOOLS
@@ -78,6 +79,16 @@ def printUptime():
 	uptime = line.split(',')[0].split('up')
 	print("Up since %s (uptime: %s)" % (uptime[0].strip(), uptime[1].strip()))
 	
+def printMemoryStatus():
+	free = call('free -h').split('\n')
+	line = free[1].split()
+	val = int(line[2][:-1])-int(line[6][:-1])
+	maxMem = int(line[1][:-1])
+	if(val/maxMem > MEM_USED_THRESHOLD):
+		print("High memory usage: %d%s of %s" % (val,line[2][-1:],line[1]))
+	#else:
+	##	print("Memory ok %f" % (val/maxMem))
+
 def printDivider():
 	print()	
 
