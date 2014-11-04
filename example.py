@@ -11,3 +11,4 @@ fc.printDf(hdds)
 # Some maybe important processes
 fc.printProcessStatus(["mysqld", "apache2"])
 
+print("If you don't see errors, everything should be fine.")
