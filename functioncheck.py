@@ -92,20 +92,7 @@ def printSubsection(string):
 ### TEST
 
 def testProcessRunning(process):
-	return len(grep(call('ps aux'),process).split('\n'))-1 >= 1
+	#return len(grep(call('ps aux'),process).split('\n'))-1 >= 1
+	process = process[1:15]
+	return len(call('pgrep ' + process)) >= 1
 
-### MAIN
-
-def examples():
-	printHeader("<hostname> Systemreport")
-
-	hdds = ungrep(call('df -h'),'tmpfs')
-	printDf(hdds)
-	
-	printProcessStatus(["processname", "processname", "processname"])
-	
-	printRsnapshotState('/var/rsnapshot/')
-	
-	printRaidState()
-
-examples()
