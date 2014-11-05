@@ -6,6 +6,7 @@ import os.path, time
 
 ### Config
 DISK_USAGE_THRESHOLD = 75
+LVMVG_USAGE_THRESHOLD = .75
 MEM_USED_THRESHOLD = .75
 BACKUP_HOURS_THRESHOLD = 24
 
@@ -88,6 +89,19 @@ def printMemoryStatus():
 		print("High memory usage: %d%s of %s" % (val,line[2][-1:],line[1]))
 	#else:
 	##	print("Memory ok %f" % (val/maxMem))
+
+def printLVMVGStatus():
+	#TODO: currently only supports one line, i.e. one vg
+	status = call('vgdisplay -s').split()
+	total = "%s %s" % (status[1],status[2])
+	used = "%s %s" % (status[3][1:],status[4])
+	free = "%s %s" % (status[7],status[8])
+	ratiofree = float(status[3][1:]) / float(status[1])
+	vgname = status[0]
+	if LVMVG_USAGE_THRESHOLD < ratiofree:
+		print("LVM VG %s free %.2f %% WARN (threshold %.0f %%) " % (vgname, ratiofree*100, LVMVG_USAGE_THRESHOLD*100))	
+	#else:
+	#	print("LVM VG %s free %.2f %% OK (threshold %.0f %%) " % (vgname, ratiofree*100, LVMVG_USAGE_THRESHOLD*100))	
 
 def printDivider():
 	print()	
