@@ -81,12 +81,12 @@ def printUptime():
 	print("Up since %s (uptime: %s)" % (uptime[0].strip(), uptime[1].strip()))
 	
 def printMemoryStatus():
-	free = call('free -h').split('\n')
+	free = call('free -m').split('\n')
 	line = free[1].split()
 	val = int(line[2][:-1])-int(line[6][:-1])
 	maxMem = int(line[1][:-1])
 	if(val/maxMem > MEM_USED_THRESHOLD):
-		print("High memory usage: %d%s of %s" % (val,line[2][-1:],line[1]))
+		print("High memory usage: %d%s MiB of %s MiB are used." % (val,line[2][-1:],line[1]))
 	#else:
 	##	print("Memory ok %f" % (val/maxMem))
 
