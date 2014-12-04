@@ -3,6 +3,7 @@ import subprocess as sub
 import sys 
 import re
 import os.path, time
+import psutil
 
 ### Config
 DISK_USAGE_THRESHOLD = 75
@@ -121,3 +122,18 @@ def testProcessRunning(process):
 	process = process[1:15]
 	return len(call('pgrep ' + process)) >= 1
 
+def checkMetadataProxies():
+	netns_call = call('ip netns')
+	netns = []
+	for ns in netns_call.split("\n"):
+		if ns.startswith("qrouter"):
+			nsid = ns[8:]
+			netns.append(nsid)
+	count = 0
+	for pid in psutil.pids():
+		p = psutil.Process(pid)
+		cmdline = p.cmdline()
+		if any("metadata-proxy" in s for s in cmdline):
+			routerid = cmdline[4][12:]
+			if not any(routerid in t for t in netns):
+				print("No metadata-proxy found for router with ID: %s" % routerid)
