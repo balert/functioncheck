@@ -9,7 +9,7 @@ import psutil
 DISK_USAGE_THRESHOLD = 75
 LVMVG_USAGE_THRESHOLD = .75
 MEM_USED_THRESHOLD = .75
-BACKUP_HOURS_THRESHOLD = 24
+BACKUP_HOURS_THRESHOLD = 48
 
 ### TOOLS
 
@@ -45,7 +45,7 @@ def printRaidState():
 	mdstat = call('cat /proc/mdstat').split('\n')
 	mdstat = mdstat[1:-2]
 	hddsUp = mdstat[1].split(' ')[-1]
-	if not hddsUp == "[UU]":
+	if not hddsUp == "[UU]" and not hddsUp == "[UUU]":
 		print("RAID: degraded.")
 		for line in mdstat:
 			print(line)
