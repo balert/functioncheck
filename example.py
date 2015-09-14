@@ -5,7 +5,12 @@ fc.DISK_USAGE_THRESHOLD = 25
 
 fc.printHeader("Systemreport")
 
+# blocks
 hdds = fc.ungrep(fc.ungrep(fc.ungrep(fc.call('df -h'),'tmpfs'),'none'),'udev')
+fc.printDf(hdds)
+
+# inodes
+hdds = fc.ungrep(fc.ungrep(fc.ungrep(fc.call('df -i'),'tmpfs'),'none'),'udev')
 fc.printDf(hdds)
 
 # Some maybe important processes
