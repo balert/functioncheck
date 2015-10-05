@@ -51,7 +51,7 @@ def printRaidState():
 			print(line)
 
 def printRsnapshotState(dir):
-	dir += 'daily.0'
+	dir += 'alpha.0'
 	backupTime = os.path.getctime(dir)
 	backupAge = time.time() - backupTime
 	backupAge /= 3600
