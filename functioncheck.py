@@ -120,7 +120,7 @@ def printSubsection(string):
 def testProcessRunning(process):
 	#return len(grep(call('ps aux'),process).split('\n'))-1 >= 1
 	process = process[1:15]
-	return len(call('pgrep ' + process)) >= 1
+	return len(call('pgrep -f ' + process)) >= 1
 
 def checkMetadataProxies():
 	netns_call = call('ip netns')
